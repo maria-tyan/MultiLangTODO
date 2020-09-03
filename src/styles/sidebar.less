@@ -1,0 +1,77 @@
+.sidebar {
+  display: block;
+  position: fixed;
+  width: 260px;
+  background-color: @color__navy;
+  color: white;
+  padding: 20px;
+  margin: 0;
+  height: 100vh;
+  text-align: left;
+
+  &__title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__toogle {
+    display: block;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      background-color: white;
+      border-radius: 2px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &::before {
+      width: 20px;
+      height: 2px;
+    }
+
+    &::after {
+      width: 2px;
+      height: 20px;
+    }
+  }
+
+  &__list-item {
+    display: block;
+  }
+  &__list-enter-active, .list-leave-active {
+    transition: all 1s;
+  }
+  &__list-enter, .list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}

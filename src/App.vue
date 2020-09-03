@@ -1,28 +1,50 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Sidebar />
+    <div
+      class="wrapper"
+    >
+      <h1>
+        MultiLang To Do List
+      </h1>
+      <h3>
+        {{ translationResultsRu }}
+      </h3>
+      <p>
+        {{ getErrorState }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import { mapGetters, mapActions } from 'vuex';
+import Sidebar from './components/Sidebar.vue';
 
 export default {
-  name: 'App',
+  name: 'MultiLangTODO',
   components: {
-    HelloWorld,
+    Sidebar,
+  },
+  computed: {
+    ...mapGetters([
+      'allLists',
+      'translationResultsRu',
+      'getErrorState',
+    ]),
+  },
+  mounted() {
+    this.getRuTranslation();
+  },
+  methods: {
+    ...mapActions([
+      'getRuTranslation',
+    ]),
   },
 };
 </script>
 
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import "./styles/global.less";
+  @import "./styles/variables.less";
 </style>
