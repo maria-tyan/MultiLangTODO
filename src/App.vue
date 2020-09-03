@@ -34,7 +34,9 @@ export default {
     ]),
   },
   mounted() {
-    this.getRuTranslation();
+    if (false) {
+      this.getRuTranslation();
+    }
   },
   methods: {
     ...mapActions([

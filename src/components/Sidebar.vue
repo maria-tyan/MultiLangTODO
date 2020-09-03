@@ -17,23 +17,25 @@
           @click="slideDown = !slideDown"
         />
       </div>
-      <transition-group
-        name="slider"
-        tag="div"
-      >
+      <transition name="accordion">
         <div
-          v-for="(item) in list.items"
-          :key="item.title"
-          class="sidebar__list-item"
+          v-if="slideDown"
+          class="accordion"
         >
-          <h3>
-            {{ item.title }}
-          </h3>
-          <p>
-            {{ item.description }}
-          </p>
+          <div
+            v-for="(item) in list.items"
+            :key="item.title"
+            class="accordion__element"
+          >
+            <h3 class="accordion__title">
+              {{ item.title }}
+            </h3>
+            <p class="accordion__description">
+              {{ item.description }}
+            </p>
+          </div>
         </div>
-      </transition-group>
+      </transition>
     </div>
   </div>
 </template>
@@ -44,7 +46,7 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      slideDown: true,
+      slideDown: false,
     };
   },
   computed: {
@@ -60,6 +62,7 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../styles/accordion.less";
   @import "../styles/sidebar.less";
   @import (reference) "../styles/variables.less";
 </style>
