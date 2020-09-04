@@ -3,6 +3,7 @@ export default {
     listOfLists: [
       {
         name: 'ToDoList',
+        open: false,
         items: [
           {
             title: 'First Item',
@@ -16,6 +17,7 @@ export default {
       },
       {
         name: 'ShoppingList',
+        open: true,
         items: [
           {
             title: 'Bread',
@@ -42,6 +44,10 @@ export default {
     updateErrorState(state, data) {
       state.errors = data;
     },
+    updateListItem(state, { newItem, listName }) {
+      const listIndex = state.listOfLists.map((e) => e.name).indexOf(listName);
+      state.listOfLists[listIndex].items.push(newItem);
+    },
   },
   actions: {
     async getRuTranslation(context) {
@@ -58,7 +64,6 @@ export default {
       };
       fetch('http://lightspeed.difficu.lt:62000/api/translate/lt/ru', requestOptions)
         .then(async (response) => {
-          console.log('response', response);
           const data = await response.json();
 
           // check for error response
@@ -68,14 +73,15 @@ export default {
             return Promise.reject(error);
           }
 
-          console.log(data, response);
-
           context.commit('updateTranslation', data.translated);
           return data;
         })
         .catch((error) => {
           context.commit('updateErrorState', error);
         });
+    },
+    addItemToTheList(context, { newItem, listName }) {
+      context.commit('updateListItem', { newItem, listName });
     },
   },
   getters: {
@@ -89,7 +95,7 @@ export default {
       return state.errors;
     },
     getArrayOutOfLists(state) {
-      return state.listOfLists;
+      return state.listOfLists.map((e) => e.items);
     },
   },
 };

@@ -34,6 +34,7 @@
               {{ item.description }}
             </p>
           </div>
+          <AddListItemForm />
         </div>
       </transition>
     </div>
@@ -42,8 +43,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import AddListItemForm from './AddListItemForm.vue';
 
 export default {
+  components: {
+    AddListItemForm,
+  },
   data() {
     return {
       slideDown: false,
