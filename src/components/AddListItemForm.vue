@@ -1,17 +1,34 @@
 <template>
   <form id="form-new-item" class="form" @submit.prevent="submitItem">
-    <input
-      v-model="title"
-      type="text"
-      class="form__input"
-    />
-    <input
-      v-model="description"
-      type="text"
-      class="form__input"
-    />
+    <div class="form__input-wrapper">
+      <label
+        class="form__label"
+        :class="'form__label_active'"
+      >
+        This is the title
+      </label>
+      <input
+        v-model="title"
+        type="text"
+        class="form__input"
+      />
+    </div>
+    <div class="form__input-wrapper">
+      <label
+        class="form__label"
+        :class="'form__label_active'"
+      >
+        And a description
+      </label>
+      <input
+        v-model="description"
+        type="text"
+        class="form__input form__input-description"
+      />
+    </div>
     <input
       type="submit"
+      class="form__input-submit"
       value="add"
     >
   </form>
@@ -64,4 +81,5 @@ export default {
 
 <style lang="less">
   @import (reference) "../styles/variables.less";
+  @import "../styles/form.less";
 </style>

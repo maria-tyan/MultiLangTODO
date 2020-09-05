@@ -59,8 +59,6 @@ export default {
       'allLists',
     ]),
   },
-  mounted() {
-  },
   methods: {
     ...mapMutations([
       'updateListVisibility',
