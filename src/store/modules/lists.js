@@ -48,6 +48,10 @@ export default {
       const listIndex = state.listOfLists.map((e) => e.name).indexOf(listName);
       state.listOfLists[listIndex].items.push(newItem);
     },
+    updateListVisibility(state, listName) {
+      const listIndex = state.listOfLists.map((e) => e.name).indexOf(listName);
+      state.listOfLists[listIndex].open = !state.listOfLists[listIndex].open;
+    },
   },
   actions: {
     async getRuTranslation(context) {
@@ -96,6 +100,10 @@ export default {
     },
     getArrayOutOfLists(state) {
       return state.listOfLists.map((e) => e.items);
+    },
+    getFirstListName(state) {
+      // for default state of the app
+      return state.listOfLists[0].name;
     },
   },
 };

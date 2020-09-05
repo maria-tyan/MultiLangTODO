@@ -14,12 +14,12 @@
         </h2>
         <div
           class="sidebar__toogle"
-          @click="slideDown = !slideDown"
+          @click="updateListVisibility(list.name)"
         />
       </div>
       <transition name="accordion">
         <div
-          v-if="slideDown"
+          v-if="list.open"
           class="accordion"
         >
           <div
@@ -34,7 +34,7 @@
               {{ item.description }}
             </p>
           </div>
-          <AddListItemForm />
+          <AddListItemForm :currentListName='list.name' />
         </div>
       </transition>
     </div>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import AddListItemForm from './AddListItemForm.vue';
 
 export default {
@@ -62,6 +62,9 @@ export default {
   mounted() {
   },
   methods: {
+    ...mapMutations([
+      'updateListVisibility',
+    ]),
   },
 };
 </script>
