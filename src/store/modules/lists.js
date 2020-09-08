@@ -34,12 +34,12 @@ export default {
         ],
       },
     ],
-    translationRu: [],
+    translation: [],
     errors: [],
   },
   mutations: {
     updateTranslation(state, translationResults) {
-      state.translationRu = translationResults;
+      state.translation = translationResults;
     },
     updateErrorState(state, data) {
       state.errors = data;
@@ -54,7 +54,18 @@ export default {
     },
   },
   actions: {
-    async getRuTranslation(context) {
+    async getTranslation({ commit, getters }, payload) {
+      // transform data to the suitable array for the request form
+      let dataForTranslation = getters.allLists
+        .find((list) => (list.name === payload.listName));
+      dataForTranslation = Object.values(dataForTranslation.items)
+        .map((e) => Object.values(e))
+        .flat(1);
+
+      const requestObj = {
+        body: dataForTranslation,
+      };
+      console.log(requestObj);
       // POST request using fetch with error handling
       const requestOptions = {
         method: 'POST',
@@ -62,9 +73,7 @@ export default {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          body: ['laba diena', 'labas', 'sveikas, kaip laikaisi?', 'aš pavargau nuo viso šito.'],
-        }),
+        body: JSON.stringify(requestObj),
       };
       fetch('http://lightspeed.difficu.lt:62000/api/translate/lt/ru', requestOptions)
         .then(async (response) => {
@@ -77,11 +86,17 @@ export default {
             return Promise.reject(error);
           }
 
-          context.commit('updateTranslation', data.translated);
+          // if translated data not found return error
+          if (!data.translated) {
+            const error = 'No data';
+            return Promise.reject(error);
+          }
+
+          commit('updateTranslation', data.translated);
           return data;
         })
         .catch((error) => {
-          context.commit('updateErrorState', error);
+          commit('updateErrorState', error);
         });
     },
     addItemToTheList(context, { newItem, listName }) {
@@ -92,14 +107,19 @@ export default {
     allLists(state) {
       return state.listOfLists;
     },
-    translationResultsRu(state) {
-      return state.translationRu;
+    translatedListArray(state) {
+      return state.translation;
     },
     getErrorState(state) {
       return state.errors;
     },
-    getArrayOutOfLists(state) {
-      return state.listOfLists.map((e) => e.items);
+    originalListArray(state) {
+      // transform data to the suitable array for the request form
+      const array = state.listOfLists
+        .find((list) => (list.name === state.listOfLists[0].name));
+      return Object.values(array.items)
+        .map((e) => Object.values(e))
+        .flat(1);
     },
     getFirstListName(state) {
       // for default state of the app

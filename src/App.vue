@@ -7,9 +7,7 @@
       <h1>
         MultiLang To Do List
       </h1>
-      <h3>
-        {{ translationResultsRu }}
-      </h3>
+      <TranslatedView />
       <p>
         {{ getErrorState }}
       </p>
@@ -18,29 +16,22 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import Sidebar from './components/Sidebar.vue';
+import TranslatedView from './components/TranslatedView.vue';
 
 export default {
   name: 'MultiLangTODO',
   components: {
     Sidebar,
+    TranslatedView,
   },
   computed: {
     ...mapGetters([
       'allLists',
-      'translationResultsRu',
       'getErrorState',
-    ]),
-  },
-  mounted() {
-    if (false) {
-      this.getRuTranslation();
-    }
-  },
-  methods: {
-    ...mapActions([
-      'getRuTranslation',
+      'getFirstListName',
+      'translatedListArray',
     ]),
   },
 };
